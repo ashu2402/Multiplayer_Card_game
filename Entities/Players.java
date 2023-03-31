@@ -2,7 +2,6 @@ package Entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Player {
     
@@ -26,22 +25,47 @@ public class Player {
         return hand_cards.remove(index);
     }
 
+    public List<Cards> get_hand_cards(){
+        return hand_cards;
+    }
+
     public int hand_cards_size(){
         return hand_cards.size();
     }
 
 
-    
+
 
     public boolean hasCardToPlay(Cards topCard) {
+
+        int count_handcards_valid = 0;
+        
         for (Cards card : hand_cards) {
-            if(card.getSuit().equals(topCard.getSuit()) || card.getRank().equals(topCard.getRank())) {
-                return true;
-            }
+                if(card.getSuit().equals(topCard.getSuit()) || card.getRank().equals(topCard.getRank())) {
+
+                    if((topCard.getRank().equals("Ace") && card.getRank().equals("Ace")) || (topCard.getRank().equals("King") && card.getRank().equals("King")) ||
+                    (topCard.getRank().equals("Queen") && card.getRank().equals("Queen")) || (topCard.getRank().equals("Jack") && card.getRank().equals("Jack"))){
+
+                    }
+                    else{
+                        count_handcards_valid++;
+                    } 
+                }
         }
-        return false;
+        if(count_handcards_valid>=1){
+            return true;
+        }   
+        else{
+            return false;
+        }       
     }
+
+
     
+    public boolean has_player_won() {
+        return hand_cards.isEmpty();
+    }
+
 
     
 }

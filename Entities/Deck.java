@@ -17,7 +17,12 @@ public class Deck {
 
         for (String suit : suits) {
             for (String rank : ranks) {
-                cards.add(new Cards(suit, rank));  
+                if (rank.equals("Ace") || rank.equals("King") || rank.equals("Queen") || rank.equals("Jack")) {
+                    cards.add(new Cards(suit, rank, "action"));
+                } 
+                else {
+                    cards.add(new Cards(suit, rank, "number"));
+                }
             }
         }
     }
