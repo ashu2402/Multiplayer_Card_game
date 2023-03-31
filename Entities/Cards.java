@@ -3,12 +3,10 @@ package Entities;
 public class Cards {
     private final String suit;
     private final String rank;
-    private final String type;
 
-    public Cards(String suit, String rank, String type) {
+    public Cards(String suit, String rank) {
         this.suit = suit;
         this.rank = rank;
-        this.type = type;
     }
 
     public String getSuit() {
@@ -19,10 +17,7 @@ public class Cards {
         return rank;
     }
 
-    public String getType() {
-        return type;
-    }
-
+    
     @Override
     public String toString() {
         return rank + "_of_" + suit;
