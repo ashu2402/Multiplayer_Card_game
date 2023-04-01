@@ -36,28 +36,35 @@ public class Player {
 
 
 
-    public boolean hasCardToPlay(Cards topCard) {
+    public boolean doPlayerhaveCardToPlay(Cards topCard) {
 
-        int count_handcards_valid = 0;
+        // int count_handcards_valid = 0;
         
+        // for (Cards card : hand_cards) {
+        //         if(card.getSuit().equals(topCard.getSuit()) || card.getRank().equals(topCard.getRank())) {
+
+        //             if((topCard.getRank().equals("Ace") && card.getRank().equals("Ace")) || (topCard.getRank().equals("King") && card.getRank().equals("King")) ||
+        //             (topCard.getRank().equals("Queen") && card.getRank().equals("Queen")) || (topCard.getRank().equals("Jack") && card.getRank().equals("Jack"))){
+
+        //             }
+        //             else{
+        //                 count_handcards_valid++;
+        //             } 
+        //         }
+        // }
+        // if(count_handcards_valid>=1){
+        //     return true;
+        // }   
+        // else{
+        //     return false;
+        // }       
+
         for (Cards card : hand_cards) {
-                if(card.getSuit().equals(topCard.getSuit()) || card.getRank().equals(topCard.getRank())) {
-
-                    if((topCard.getRank().equals("Ace") && card.getRank().equals("Ace")) || (topCard.getRank().equals("King") && card.getRank().equals("King")) ||
-                    (topCard.getRank().equals("Queen") && card.getRank().equals("Queen")) || (topCard.getRank().equals("Jack") && card.getRank().equals("Jack"))){
-
-                    }
-                    else{
-                        count_handcards_valid++;
-                    } 
-                }
+            if (card.getSuit().equals(topCard.getSuit()) || card.getRank().equals(topCard.getRank())) {
+                return true;
+            }
         }
-        if(count_handcards_valid>=1){
-            return true;
-        }   
-        else{
-            return false;
-        }       
+        return false;
     }
 
 

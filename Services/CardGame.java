@@ -3,6 +3,7 @@ package Services;
 import Entities.Cards;
 import Entities.Deck;
 import Entities.Player;
+import MainApplication.Main;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -19,6 +20,8 @@ public class CardGame {
 
     //this maintains the current player whose chance is there to play
     private int current_player_index;
+
+    private String played_rank;
 
     private static final String[] actions = {"Skip","Reverse","+2","+4"};
     private static final String[] ranks = {"2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace"};
@@ -77,10 +80,10 @@ public class CardGame {
             //now we will be checking if whether a player can play his turn or need to draw a new card:
 
             //the player has a valid cards to play in his hand_cards:
-            if (current_player.hasCardToPlay(discard_pile_stack.get(discard_pile_stack.size() - 1))) {
+            if (current_player.doPlayerhaveCardToPlay(discard_pile_stack.get(discard_pile_stack.size() - 1))) {
 
                 //this fucntion chooseCard will return index of a valid card from hand_cards:
-                int card_index = chooseCard(current_player);
+                int card_index = chooseCardfromHandCards(current_player);
 
                 Cards played_card = current_player.card_to_play(card_index);
                 discard_pile_stack.add(played_card);
@@ -115,12 +118,24 @@ public class CardGame {
 
             //updating the next player inline as per the order:
             if(reverseOrder) {
+
+                if(Main.num_of_players==2 && played_rank.equals("King")){
+                    System.out.println("done");
+                    break;
+                }
+
                 current_player_index--;
                 if (current_player_index < 0) {
                     current_player_index = players_list.size() - 1;
                 }
             } 
             else {
+
+                if(Main.num_of_players==2 && played_rank.equals("King")){
+                    System.out.println("done");
+                    break;
+                }
+
                 current_player_index++;
                 if (current_player_index == players_list.size()) {
                     current_player_index = 0;
@@ -133,7 +148,7 @@ public class CardGame {
 
 
     //this function will return the index of the card which is valid for the turn considering all of the required conditions:
-    private int chooseCard(Player player) {
+    private int chooseCardfromHandCards(Player player) {
 
         Scanner sc = new Scanner(System.in);
 
@@ -151,25 +166,33 @@ public class CardGame {
                 System.out.println("Invalid input.");
             } 
             else {
+                // Cards chosenCard = hand.get(cardIndex);
+
+                // String rank_topCard = discard_pile_stack.get(discard_pile_stack.size() - 1).getRank();
+
+
+                // if(chosenCard.getSuit().equals(discard_pile_stack.get(discard_pile_stack.size() - 1).getSuit()) || chosenCard.getRank().equals(discard_pile_stack.get(discard_pile_stack.size() - 1).getRank())) {
+
+                //     if((rank_topCard.equals("Ace") && chosenCard.getRank().equals("Ace")) || (rank_topCard.equals("King") && chosenCard.getRank().equals("King")) ||
+                //     (rank_topCard.equals("Queen") && chosenCard.getRank().equals("Queen")) || (rank_topCard.equals("Jack") && chosenCard.getRank().equals("Jack")))
+                //     {
+                //         System.out.println("You cannot play that card as action card cannot be played over the same");
+                //     }
+                //     else{
+                //         return cardIndex;
+                //     }  
+                // } 
+                // else {
+                //     System.out.println("You cannot play that card.");
+                // }
+
                 Cards chosenCard = hand.get(cardIndex);
-
-                String rank_topCard = discard_pile_stack.get(discard_pile_stack.size() - 1).getRank();
-
-
-                if(chosenCard.getSuit().equals(discard_pile_stack.get(discard_pile_stack.size() - 1).getSuit()) || chosenCard.getRank().equals(discard_pile_stack.get(discard_pile_stack.size() - 1).getRank())) {
-
-                    if((rank_topCard.equals("Ace") && chosenCard.getRank().equals("Ace")) || (rank_topCard.equals("King") && chosenCard.getRank().equals("King")) ||
-                    (rank_topCard.equals("Queen") && chosenCard.getRank().equals("Queen")) || (rank_topCard.equals("Jack") && chosenCard.getRank().equals("Jack")))
-                    {
-                        System.out.println("You cannot play that card as action card cannot be played over the same");
-                    }
-                    else{
+                    if (chosenCard.getSuit().equals(discard_pile_stack.get(discard_pile_stack.size() - 1).getSuit()) || chosenCard.getRank().equals(discard_pile_stack.get(discard_pile_stack.size() - 1).getRank())) {
                         return cardIndex;
-                    }  
-                } 
-                else {
-                    System.out.println("You cannot play that card.");
-                }
+                    } 
+                    else {
+                        System.out.println("You cannot play that card.");
+                    }
             }
         }
     }
@@ -184,30 +207,57 @@ public class CardGame {
                 reverseOrder = !reverseOrder;
                 break;
 
+                
             case "Ace":
                 System.out.println("The next player has been skipped.");
-                current_player_index++;
-                if (current_player_index == players_list.size()) {
-                    current_player_index = 0;
+                if(reverseOrder==false){
+                    current_player_index++;
+                    if (current_player_index == players_list.size()) {
+                        current_player_index = 0;
+                    }
+                }
+                else{
+                    current_player_index--;
+                    if (current_player_index < 0) {
+                        current_player_index = players_list.size() - 1;
+                    }
                 }
                 break;
 
+
             case "Queen":
                 System.out.println("The next player will draw 2 cards.");
-                current_player_index++;
-                if (current_player_index == players_list.size()) {
-                    current_player_index = 0;
+                if(reverseOrder==false){
+                    current_player_index++;
+                    if (current_player_index == players_list.size()) {
+                        current_player_index = 0;
+                    }
+                }
+                else{
+                    current_player_index--;
+                    if (current_player_index < 0) {
+                        current_player_index = players_list.size() - 1;
+                    }
                 }
                 Player nextPlayer = players_list.get(current_player_index);
                 nextPlayer.add_card(deck.draw_card_from_deck());
                 nextPlayer.add_card(deck.draw_card_from_deck());
                 break;
 
+
             case "Jack":
                 System.out.println("The next player will draw 4 cards.");
-                current_player_index++;
-                if (current_player_index == players_list.size()) {
-                    current_player_index = 0;
+                if(reverseOrder==false){
+                    current_player_index++;
+                    if (current_player_index == players_list.size()) {
+                        current_player_index = 0;
+                    }
+                }
+                else{
+                    current_player_index--;
+                    if (current_player_index < 0) {
+                        current_player_index = players_list.size() - 1;
+                    }
                 }
                 Player nextPlayer1 = players_list.get(current_player_index);
                 nextPlayer1.add_card(deck.draw_card_from_deck());
