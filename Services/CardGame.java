@@ -14,6 +14,10 @@ public class CardGame {
     
     private List<Cards> discard_pile_stack;
     private List<Player> players_list;
+
+    public List<Player> getPlayers_list() {
+        return players_list;
+    }
     
     //a varaible to maintain the order whether clockwise or anticlockwisse
     private boolean reverseOrder;

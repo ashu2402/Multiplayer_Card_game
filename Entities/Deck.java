@@ -28,6 +28,10 @@ public class Deck {
     }
 
     //supporting methods:
+    public List<Cards> get_deck(){
+        return cards;
+    }
+
 
     public void shuffle_deck(){
         Collections.shuffle(cards);
