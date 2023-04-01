@@ -32,7 +32,6 @@ public class Deck {
         return cards;
     }
 
-
     public void shuffle_deck(){
         Collections.shuffle(cards);
     }

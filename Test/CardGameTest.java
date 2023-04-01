@@ -4,6 +4,7 @@ import Entities.Cards;
 import Entities.Deck;
 import Entities.Player;
 import Services.CardGame;
+import java.beans.Transient;
 
 public class CardGameTest {
     
@@ -145,4 +146,5 @@ public class CardGameTest {
         //current_player_index is being upadated:
         assertEquals(nextPlayer.getPlayer_name(), cardGame.getPlayers_list().get(cardGame.getCurrent_player_index()).getPlayer_name());
     }
+    
 }

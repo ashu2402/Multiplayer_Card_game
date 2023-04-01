@@ -14,16 +14,21 @@ public class CardGame {
     
     private List<Cards> discard_pile_stack;
     private List<Player> players_list;
-
+    
     public List<Player> getPlayers_list() {
         return players_list;
     }
-    
+
     //a varaible to maintain the order whether clockwise or anticlockwisse
     private boolean reverseOrder;
 
     //this maintains the current player whose chance is there to play
     private int current_player_index;
+    
+    public int getCurrent_player_index() {
+        return current_player_index;
+    }
+
 
     private String played_rank;
 
@@ -170,26 +175,6 @@ public class CardGame {
                 System.out.println("Invalid input.");
             } 
             else {
-                // Cards chosenCard = hand.get(cardIndex);
-
-                // String rank_topCard = discard_pile_stack.get(discard_pile_stack.size() - 1).getRank();
-
-
-                // if(chosenCard.getSuit().equals(discard_pile_stack.get(discard_pile_stack.size() - 1).getSuit()) || chosenCard.getRank().equals(discard_pile_stack.get(discard_pile_stack.size() - 1).getRank())) {
-
-                //     if((rank_topCard.equals("Ace") && chosenCard.getRank().equals("Ace")) || (rank_topCard.equals("King") && chosenCard.getRank().equals("King")) ||
-                //     (rank_topCard.equals("Queen") && chosenCard.getRank().equals("Queen")) || (rank_topCard.equals("Jack") && chosenCard.getRank().equals("Jack")))
-                //     {
-                //         System.out.println("You cannot play that card as action card cannot be played over the same");
-                //     }
-                //     else{
-                //         return cardIndex;
-                //     }  
-                // } 
-                // else {
-                //     System.out.println("You cannot play that card.");
-                // }
-
                 Cards chosenCard = hand.get(cardIndex);
                     if (chosenCard.getSuit().equals(discard_pile_stack.get(discard_pile_stack.size() - 1).getSuit()) || chosenCard.getRank().equals(discard_pile_stack.get(discard_pile_stack.size() - 1).getRank())) {
                         return cardIndex;
@@ -204,7 +189,7 @@ public class CardGame {
 
 
     //following actions for the action_cards will be performed:
-    private void performAction(String rank) {
+    public void performAction(String rank) {
         switch (rank) {
             case "King":
                 System.out.println("The order of play has been reversed.");
@@ -270,6 +255,6 @@ public class CardGame {
                 nextPlayer1.add_card(deck.draw_card_from_deck());
                 break;
     }
-}
+    }
 
 }
